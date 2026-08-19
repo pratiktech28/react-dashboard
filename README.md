@@ -1,4 +1,4 @@
-# Nexus personal dashboard
+# Nexus dashboard
 
 ## Structure
 
