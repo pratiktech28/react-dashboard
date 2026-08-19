@@ -1,0 +1,3 @@
+import bcrypt from "bcryptjs"; import { PrismaClient } from "@prisma/client";
+const db=new PrismaClient();
+async function main(){const user=await db.user.upsert({where:{email:"demo@example.com"},update:{},create:{name:"Demo User",email:"demo@example.com",passwordHash:await bcrypt.hash("DemoPass1",12),phone:"+91 98765 43210",bio:"A development seed account.",location:"Mumbai, India",settings:{create:{}},activities:{createMany:{data:[{type:"ACCOUNT",description:"Account created"},{type:"PROFILE",description:"Completed profile"}]}}}});console.log(`Seeded ${user.email}`)} main().finally(()=>db.$disconnect());

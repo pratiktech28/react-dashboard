@@ -1,0 +1,2 @@
+import { auth } from "@/auth"; import { db } from "@/lib/db"; import { redirect } from "next/navigation"; import { ProfileForm } from "@/components/profile-form";
+export default async function Profile(){const s=await auth();if(!s?.user?.id)redirect("/login");const u=await db.user.findUnique({where:{id:s.user.id},select:{name:true,image:true,phone:true,bio:true,location:true,email:true}});if(!u)redirect("/login");return <><h1 className="text-3xl font-bold">My Profile</h1><p className="mt-1 text-slate-500">{u.email}</p><ProfileForm user={u}/></>}

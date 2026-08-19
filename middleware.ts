@@ -1,0 +1,3 @@
+import { auth } from "@/auth"; import { NextResponse } from "next/server";
+export default auth((req) => { const p = req.nextUrl.pathname; const privatePath = ["/dashboard", "/profile", "/settings", "/activity", "/api/private"].some(x => p.startsWith(x)); const guestPath = ["/login", "/signup", "/forgot-password", "/reset-password"].includes(p); if (privatePath && !req.auth) return NextResponse.redirect(new URL("/login", req.nextUrl)); if (guestPath && req.auth) return NextResponse.redirect(new URL("/dashboard", req.nextUrl)); return NextResponse.next(); });
+export const config = { matcher: ["/dashboard/:path*", "/profile/:path*", "/settings/:path*", "/activity/:path*", "/login", "/signup", "/forgot-password", "/reset-password", "/api/private/:path*"] };
